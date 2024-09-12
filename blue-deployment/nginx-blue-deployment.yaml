@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-blue-deployment
+spec:
+  replicas: 3 # Set replicas to 3 for high availability
+  selector:
+    matchLabels:
+      app: nginx-blue
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1 # Ensure at least 2 pods are always available during the update
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-blue
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/nginx/conf.d
+      volumes:
+        - name: config-volume
+          configMap:
+            name: nginx-blue-config
