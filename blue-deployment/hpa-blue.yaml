@@ -2,7 +2,7 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   creationTimestamp: null
-  name: green-deploy
+  name: blue-deploy
 spec:
   maxReplicas: 5
   minReplicas: 1
